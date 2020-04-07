@@ -71,15 +71,15 @@
 
 
 		<p>Get details of all appointments of a given patient.</p> 
-		<form action="connection.php" accept-charset=utf-8>
-			<select name="patients" method="get">
+		<form action="" accept-charset=utf-8>
+			<select name="patients"">
 			    <option value="">Select a patient:</option>
 			    <option value="Ronaldo">Ronaldo</option>
 			    <option value="Messi ">Messi</option>
 			    <option value="Neymar">Neymar</option>
 		  	</select>
 
-		  	<button type="submit" onclick="showPatientAPT(this.value, this.id)" id="q4">Click Me!</button> 
+		  	<button type="submit" onclick="showPatientAPT(, this.id)" id="q4">Click Me!</button> 
 		</form> 
 		
 		<span id="query4"> </span>
@@ -98,6 +98,7 @@
 		<p>Get details of all unpaid bills. </p> 
 		<button type="button" onclick="sendquery(this)" id="">Click Me!</button> 
 		<span id="query7"> </span>
-		
+
+		<?php include('connection.php'); ?>
 	</body>
 </html> 
