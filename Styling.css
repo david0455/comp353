@@ -1,0 +1,96 @@
+body {
+    margin: 0;
+  }
+
+  header {
+      padding: 6pt;
+      width: 100%;
+      color: white;
+      background-color: rgb(78, 63, 117);
+      top: 0;
+      position: fixed;
+      font-size: 35pt;
+      height: 35pt;
+      border-bottom: 2px solid black;
+  }
+  
+  #nav {
+    top: 49pt;
+    position: fixed;
+    width: 300px;
+    height: 100%; 
+  }
+  
+  ul {
+    list-style-type: none;
+    font-size: 20pt;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: rgb(88, 71, 133);
+    position: absolute;
+    height: 100%;
+    overflow: auto;
+  }
+  
+  li a {
+    display: block;
+    color: rgb(202, 198, 198);
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+  
+  li a.active {
+    background-color: lightblue;
+    color: black;
+  }
+  
+  li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+  }
+
+  .data {
+      position: absolute;
+      top: 49pt;
+      left: 300px;
+      right: 0px;
+      margin: 0px;
+      padding-left: 25px;
+      padding-right: 25px;
+      padding-bottom: 25px;
+  }
+
+  #logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 60%;
+  }
+  
+  table {
+    width: 100%;
+  }
+
+  table, th, td {
+    border: 1px solid black;
+
+}
+
+#admincontainer {
+  position: fixed;
+  width: 300px;
+  height: 47px;
+  background-color: black;
+  bottom: 0px;
+}
+
+#admin {
+  position: absolute;
+  color: red;
+  text-decoration: none;
+  font-size: 35px;
+  left: 73pt;
+}
