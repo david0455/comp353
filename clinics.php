@@ -15,6 +15,7 @@
         <li><a href="appointments.php">Appointments</a></li>
         <li><a href="patients.php">Patients</a></li>
         <li><a href="staff.php">Staff</a></li>
+        <li><a href="bills.php">Bills</a></li>
         </ul>
         <div id="admincontainer">
             <a id="admin" onclick="isAdmin()">Admin</a>
@@ -51,15 +52,14 @@
         </div>
 
         <form id="foo" method="POST">
-            <label>Select Date </label>
+            <label>Select a starting week: </label>
             <input type="date" name="weekstart"/>
             <br>
             <br>
             <label>Enter clinic name: </label>
             <input name="clinicname" type="text"/>
             <br>
-            <input type="submit" value="Query3" name="query3"/>
-            <label>(Requires Starting Week and Clinic Name)</label>
+            <input type="submit" value="Submit" name="query3"/>
         </form>
 
         <div>
