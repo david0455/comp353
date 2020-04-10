@@ -17,7 +17,7 @@
             <li><a href="staff.php">Staff</a></li>
         </ul>
         <div id="admincontainer">
-        <a id="admin" onclick="isAdmin()">Admin</a>
+            <a id="admin" href="admin.php">Admin</a>
         </div>
     </div>
     <div class="data">
@@ -49,6 +49,8 @@
                 $conn->close();
             ?>
         </div>
+        
+        <h2>Dentist Schedule</h2>
 
         <form id="foo" method="POST">
             <label>Select a starting week and ending week: </label>
@@ -67,15 +69,7 @@
             <label>Enter a dentist name to check his appointments: </label>
             <input id="dentistname" name="dentistname" type="text"/>
             <br>
-            <input type="submit" value="Query2" name="query2"/>
-            <label>(Requires Starting Week, Ending Week and Dentist Name)</label>
-            <br>
-            <br>
-            <label>Enter clinic name: </label>
-            <input name="clinicname" type="text"/>
-            <br>
-            <input type="submit" value="Query3" name="query3"/>
-            <label>(Requires Starting Week and Clinic Name)</label>
+            <input type="submit" value="Submit" name="query2"/>
         </form>
 
         <br>
@@ -121,26 +115,6 @@
                     }
                     echo "</table>";
                 }
-
-                if (isset($_POST['query3'])) {
-                    $clinicname = $_POST['clinicname'];
-                    $weekstart = $_POST['weekstart'];
-
-                    $sql = "SELECT p.*, a.Date, a.Time, a.ClinicName, a.IsMissed
-                            FROM zuc_Appointments as a
-                            LEFT JOIN zuc_Patients as p on PatientID = ID
-                            WHERE ClinicName = '". $clinicname . "'
-                            AND Date = '" . $weekstart . "'";
-
-                    $result = $conn->query($sql) or die($conn->error);
-
-                    echo "<table><tr><th>ID</th><th>Name</th><th>Age</th><th>Sex</th><th>Address</th><th>Medicare</th><th>Date</th><th>Time</th><th>Clinic Name</th><th>Missed Appointment</th></tr>";
-                    while($row = $result->fetch_assoc()) {
-                        echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["Name"] . "</td><td>" . $row["Age"] . "</td><td>" . $row["Sex"] . "</td><td>" . $row["Address"] . "</td><td>" . $row["MedicareNumber"] . "</td><td>" . $row["Date"] . "</td><td>" . $row["Time"] . "</td><td>" . $row["ClinicName"] . "</td><td>" . $row["IsMissed"] . "</td></tr>";
-                    }
-                    echo "</table><br>";
-                }
-
                 $conn->close();
             ?>
         </div>

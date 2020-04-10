@@ -17,7 +17,7 @@
             <li><a class="active" href="#staff">Staff</a></li>
         </ul>
         <div id="admincontainer">
-            <a id="admin" onclick="isAdmin()">Admin</a>
+            <a id="admin" href="admin.php">Admin</a>
         </div>
     </div>
     <div class="data">
@@ -102,17 +102,5 @@
         </div>
     </div>
 </body>
-
-<script>
-function isAdmin() {
-    var person = prompt("Please enter your password");
-    if (person == "password") {
-        window.location.href = "admin.php";
-    } else {
-        alert("Incorrect password. Redirect to Home Page");
-        window.location.href = "Main.php";
-    }
-}
-</script>
 
 </html>
