@@ -96,3 +96,8 @@ body {
   font-size: 35px;
   left: 73pt;
 }
+
+#commandLine{
+  color: #49fb35;
+  background-color: black;
+}

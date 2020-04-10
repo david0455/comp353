@@ -29,7 +29,7 @@
             <br>
             <input type="submit" value="Send Query" name="anyQuery"/>
         </form>
-        <div>
+        <div id="commandLine">
             <?php
                 $servername = "zuc353.encs.concordia.ca";
                 $username = "zuc353_4";
@@ -45,13 +45,20 @@
 
                 if (isset($_POST['anyQuery']) ) {
                     $sql = $_POST['query10'];
-
-                    if(strpos($sql, "INSERT INTO") || strpos($sql, "DELETE FROM")){
+                    $insert = "insert";
+                    $delete = "delete";
+                    if(stripos($sql, $insert) !== FALSE){
                         $result = $conn->query($sql) or die($conn->error);
+                        echo "Item added";
+                    } elseif(stripos($sql, $delete) !== FALSE){
+                        $result = $conn->query($sql) or die($conn->error);
+                        echo "Item deleted";
                     }
-                    
-                    while($row = $result->fetch_assoc()){
-                        print("<pre>".print_r($row,true)."</pre>");
+                    else{
+                        $result = $conn->query($sql) or die($conn->error);
+                        while($row = $result->fetch_assoc()){
+                            print("<pre>".print_r($row,true)."</pre>");
+                        }
                     }
                 }
                 $conn->close();
