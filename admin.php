@@ -19,6 +19,30 @@
 </div>
     <div class="data">
         <h1> I am the admin </h1>
+
+        <form id="foo" method="POST">
+            <br>
+            <label>Insert Query</label>
+            <br>
+            <textarea name="anyQuery" rows="5" cols="50"> </textarea>
+            <br>
+            <input type="submit" value="anyQuery" name="anyQuery"/>
+        </form>
+        <?php
+                $servername = "zuc353.encs.concordia.ca";
+                $username = "zuc353_4";
+                $password = "potatoal";
+                $dbname = "zuc353_4";
+
+                // Create connection
+                $conn = new mysqli($servername, $username, $password, $dbname);
+                // Check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+
+                //Do stuff
+        ?>
     </div>
 </body>
 
