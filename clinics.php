@@ -51,7 +51,7 @@
         </div>
 
         <form id="foo" method="POST">
-            <label>Select a starting week: </label>
+            <label>Select date </label>
             <input type="date" name="weekstart"/>
             <br>
             <br>
