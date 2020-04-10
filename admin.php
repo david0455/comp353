@@ -15,6 +15,7 @@
         <li><a href="appointments.php">Appointments</a></li>
         <li><a href="patients.php">Patients</a></li>
         <li><a href="staff.php">Staff</a></li>
+        <li><a href="bills.php">Bills</a></li>
     </ul>
 </div>
     <div class="data">
