@@ -80,7 +80,6 @@
 
             $sql = "SELECT zuc_DentalAssistants.*, zuc_WorksAt.ClinicName FROM zuc_DentalAssistants LEFT JOIN zuc_WorksAt ON zuc_DentalAssistants.ID = zuc_WorksAt.StaffID WHERE zuc_WorksAt.ClinicName = 'South Shore Dental';";
             $result = $conn->query($sql) or die($conn->error);
-            echo "<h2>Dental Assistants</h2>";
             echo "<h3>South Shore Dental</h3>";
             echo "<table><tr><th>ID</th><th>Name</th><th>Sex</th><th>Age</th><th>Clinic Name</th></tr>";
             while($row = $result->fetch_assoc()) {
@@ -90,7 +89,6 @@
 
             $sql = "SELECT zuc_DentalAssistants.*, zuc_WorksAt.ClinicName FROM zuc_DentalAssistants LEFT JOIN zuc_WorksAt ON zuc_DentalAssistants.ID = zuc_WorksAt.StaffID WHERE zuc_WorksAt.ClinicName = 'Greenfield Dental';";
             $result = $conn->query($sql) or die($conn->error);
-            echo "<h2>Dental Assistants</h2>";
             echo "<h3>Greenfield Dental</h3>";
             echo "<table><tr><th>ID</th><th>Name</th><th>Sex</th><th>Age</th><th>Clinic Name</th></tr>";
             while($row = $result->fetch_assoc()) {
