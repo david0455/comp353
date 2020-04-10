@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    background-color: lightblue;
   }
 
   header {
@@ -12,6 +13,7 @@ body {
       font-size: 35pt;
       height: 35pt;
       border-bottom: 2px solid black;
+      z-index: 2;
   }
   
   #nav {
