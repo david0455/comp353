@@ -19,7 +19,7 @@
             <li><a class="active"ref="#bills">Bills</a></li>
         </ul>
         <div id="admincontainer">
-            <a id="admin" href="admin.php">Admin</a>
+            <a id="admin" onclick="isAdmin()">Admin</a>
         </div>
     </div>
 

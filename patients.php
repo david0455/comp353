@@ -81,7 +81,7 @@
                         $name = $_POST['name'];
                         $age = $_POST['age'];
                         $sex = $_POST['sex'];
-                        $address = $_POST['age'];
+                        $address = $_POST['address'];
                         $medicare = $_POST['medicare'];
 
                         unset($_POST['submitInsert']);
