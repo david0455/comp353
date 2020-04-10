@@ -6,9 +6,8 @@
 </head>
 
 <body>
-    
     <header>Dental Clinic</header>
-    <div id="nav">
+    <!-- <div id="nav">
         <ul>
             <li><img src="logo.jpeg" alt="Logo" id="logo"></li>
             <li><a class="active" href="#home">Home</a></li>
@@ -21,19 +20,48 @@
         <div id="admincontainer">
             <a id="admin" onclick="isAdmin()">Admin</a>
         </div>
-    </div>
+    </div> -->
 
     <div class="data">
-        <h1>Dental Clinics</h1>
-        <p>Get details of all dentists in all the clinics.</p>
-        <button type="button" id="q1">List of dentist</button>
-        <span id="query1"> </span>
-
-        <form id="foo">
-            <input id="bar" name="bar" type="text" value="" />
-            <input type="submit" value="Query1" />
-        </form>
+</br>
+</br>
+</br>
+            <div class="container">
+                <img class="image" style="float: left;width:300px;height:300px;" src="clinic.jpg" alt="clinic" id="logo">
+                <div class="overlay">
+                    <div class="text"><a style="color:white;" href="clinics.php">Clinics</a></div>
+                </div>
+            </div>
+            <div class="container">
+                <img class="image" style="float: left;width:300px;height:300px;" src="appointment.jpg" alt="appointment" id="logo">
+                <div class="overlay">
+                    <div class="text"><a style="color:white;" href="appointments.php">Appointments</a></div>
+                </div>
+            </div>
+            <div class="container">
+                <img class="image" style="float: left;width:300px;height:300px;" src="patients.jpg" alt="patient" id="logo">
+                <div class="overlay">
+                    <div class="text"><a style="color:white;" href="patients.php">Patients</a></div>
+                </div>
+            </div>
+            <div class="container">
+                <img class="image" style="float: left;width:300px;height:300px;" src="staff.jpeg" alt="staff" id="logo">
+                <div class="overlay">
+                    <div class="text"><a style="color:white;" href="staff.php">Staff</a></div>
+                </div>
+            </div>
+            <div class="container">
+                <img class="image" style="float: left;width:300px;height:300px;" src="bills.jpg" alt="billsgo" id="logo">
+                <div class="overlay">
+                    <div class="text"><a style="color:white;" href="bills.php">Bills</a></div>
+                </div>
+            </div>
     </div>
+
+
+
+
+
 </body>
 
 <script>
