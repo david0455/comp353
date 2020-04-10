@@ -29,7 +29,7 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
-    background-color: rgb(88, 71, 133);
+    background-color: rgb(78, 63, 117);
     position: absolute;
     height: 100%;
     overflow: auto;
@@ -48,7 +48,7 @@ body {
   }
   
   li a:hover:not(.active) {
-    background-color: #555;
+    background-color: rgb(99, 83, 138);
     color: white;
   }
 

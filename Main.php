@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <header>Dental Clinic</header>
+    <header><img style="float : left; height : 35pt; margin-left: 6px; margin-right: 9px;" src="logo.jpeg" alt="Logo" id="logoNav">Dental Clinic</header>
     <!-- <div id="nav">
         <ul>
             <li><img src="logo.jpeg" alt="Logo" id="logo"></li>
