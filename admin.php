@@ -15,6 +15,7 @@
         <li><a href="appointments.php">Appointments</a></li>
         <li><a href="patients.php">Patients</a></li>
         <li><a href="staff.php">Staff</a></li>
+        <li><a href="bills.php">Staff</a></li>
     </ul>
 </div>
     <div class="data">
@@ -24,11 +25,13 @@
             <br>
             <label>Insert Query</label>
             <br>
-            <textarea name="anyQuery" rows="5" cols="50"> </textarea>
+            <textarea name="query10" rows="5" cols="50"><?php if(isset($_POST['query10'])) {echo htmlentities ($_POST['query10']); }?>
+            </textarea>
             <br>
-            <input type="submit" value="anyQuery" name="anyQuery"/>
+            <input type="submit" value="Send Query" name="anyQuery"/>
         </form>
-        <?php
+        <div>
+            <?php
                 $servername = "zuc353.encs.concordia.ca";
                 $username = "zuc353_4";
                 $password = "potatoal";
@@ -41,8 +44,18 @@
                     die("Connection failed: " . $conn->connect_error);
                 }
 
-                //Do stuff
-        ?>
+                if (isset($_POST['anyQuery']) ) {
+                    $sql = $_POST['query10'];
+
+                    $result = $conn->query($sql) or die($conn->error);
+                    while($row = $result->fetch_assoc()){
+                        print("<pre>".print_r($row,true)."</pre>");
+                    }
+                }
+                $conn->close();
+            ?>
+        </div>
+
     </div>
 </body>
 
