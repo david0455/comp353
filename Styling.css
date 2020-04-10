@@ -97,6 +97,11 @@ body {
   left: 73pt;
 }
 
+#commandLine{
+  color: #49fb35;
+  background-color: black;
+}
+
 .container {
   position: relative;
   float: left;

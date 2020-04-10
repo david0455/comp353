@@ -25,12 +25,11 @@
             <br>
             <label>Insert Query</label>
             <br>
-            <textarea name="query10" rows="5" cols="50"><?php if(isset($_POST['query10'])) {echo htmlentities ($_POST['query10']); }?>
-            </textarea>
+            <textarea name="query10" rows="5" cols="50"><?php if(isset($_POST['query10'])) {echo htmlentities ($_POST['query10']); }?></textarea>
             <br>
             <input type="submit" value="Send Query" name="anyQuery"/>
         </form>
-        <div>
+        <div id="commandLine">
             <?php
                 $servername = "zuc353.encs.concordia.ca";
                 $username = "zuc353_4";
@@ -46,10 +45,20 @@
 
                 if (isset($_POST['anyQuery']) ) {
                     $sql = $_POST['query10'];
-
-                    $result = $conn->query($sql) or die($conn->error);
-                    while($row = $result->fetch_assoc()){
-                        print("<pre>".print_r($row,true)."</pre>");
+                    $insert = "insert";
+                    $delete = "delete";
+                    if(stripos($sql, $insert) !== FALSE){
+                        $result = $conn->query($sql) or die($conn->error);
+                        echo "Item added";
+                    } elseif(stripos($sql, $delete) !== FALSE){
+                        $result = $conn->query($sql) or die($conn->error);
+                        echo "Item deleted";
+                    }
+                    else{
+                        $result = $conn->query($sql) or die($conn->error);
+                        while($row = $result->fetch_assoc()){
+                            print("<pre>".print_r($row,true)."</pre>");
+                        }
                     }
                 }
                 $conn->close();
