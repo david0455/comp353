@@ -18,7 +18,7 @@
             <li><a href="staff.php">Staff</a></li>
         </ul>
         <div id="admincontainer">
-            <a id="admin" href="admin.php">Admin</a>
+            <a id="admin" onclick="isAdmin()">Admin</a>
         </div>
     </div>
 
@@ -34,5 +34,18 @@
         </form>
     </div>
 </body>
+
+<script>
+function isAdmin() {
+    var person = prompt("Please enter your password");
+    if (person == "password") {
+        window.location.href = "admin.php";
+    } else {
+        alert("Incorrect password. Redirect to Home Page");
+        window.location.href = "Main.php";
+    }
+}
+</script>
+
 
 </html>
