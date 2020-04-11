@@ -62,7 +62,8 @@
             echo "</table><br>";
             ?>
 
-            <div style="float : left; padding : 20px;">
+            <hr>
+
             <h2>Update A Bill</h2>
             <form method="post">
                 <label for="transaction">
