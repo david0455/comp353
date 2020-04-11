@@ -38,7 +38,7 @@
                     die("Connection failed: " . $conn->connect_error);
                 }
 
-                $sql = "SELECT p.*, sum(a.IsMissed) as \"Missed Appointments\"
+                $sql = "SELECT p.*, if(sum(a.IsMissed) > 0, sum(a.IsMissed), null) as \"Missed Appointments\"
                         FROM zuc_Patients p
                         LEFT JOIN zuc_Appointments a ON p.ID = a.PatientID
                         GROUP BY p.ID;";
@@ -194,8 +194,9 @@
                 if(isset($_POST['submit'])){
                     $medicare = $_POST['medicare'];
                     
-                    $sql = "SELECT d.Name, a.Date, a.Time, a.ClinicName, e.TreatmentName
+                    $sql = "SELECT d.Name, a.Date, a.Time, a.ClinicName, e.TreatmentName, if(app.IsMissed > 0, \"Yes\", null) as \"IsMissed\"
                                 FROM zuc_AssignedTo a
+                                LEFT JOIN zuc_Appointments app on app.Date = a.Date and app.Time = a.Time and app.ClinicName = a.ClinicName
                                 LEFT JOIN zuc_Dentists d ON ID = DentistID
                                 LEFT JOIN zuc_Executes e ON a.Date = e.Date 
                                                 AND e.Time = a.Time
@@ -208,9 +209,9 @@
                                                      );
                                 ";
                     $result = $conn->query($sql) or die($conn->error);
-                    echo "<table><tr><th>Dentist</th><th>Date</th><th>Time</th><th>Clinic Name</th><th>Treatment</th></tr>";
+                    echo "<table><tr><th>Dentist</th><th>Date</th><th>Time</th><th>Clinic Name</th><th>Treatment</th><th>Missed App.</th></tr>";
                     while($row = $result->fetch_assoc()) {
-                        echo "<tr><td>" . $row["Name"]. "</td><td>" . $row["Date"]. "</td><td>" . $row["Time"]. "</td><td>" . $row["ClinicName"]. "</td><td>" . $row["TreatmentName"]. "</td></tr>";
+                        echo "<tr><td>" . $row["Name"]. "</td><td>" . $row["Date"]. "</td><td>" . $row["Time"]. "</td><td>" . $row["ClinicName"]. "</td><td>" . $row["TreatmentName"]. "</td><td>" . $row["IsMissed"]. "</td></tr>";
                     }
                 }
                 $conn->close();
@@ -224,9 +225,6 @@ function isAdmin() {
     var person = prompt("Please enter your password");
     if (person == "password") {
         window.location.href = "admin.php";
-    } else {
-        alert("Incorrect password. Redirect to Home Page");
-        window.location.href = "Main.php";
     }
 }
 </script>

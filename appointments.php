@@ -38,7 +38,7 @@
                     die("Connection failed: " . $conn->connect_error);
                 }
 
-                $sql = "SELECT a.PatientID, p.Name as PatientName, a.Date, a.Time, a.ClinicName, if(a.IsMissed > 0, a.IsMissed, null) as IsMissed, e.DentalStaffID, d.Name as StaffName, e.TreatmentName
+                $sql = "SELECT a.PatientID, p.Name as PatientName, a.Date, a.Time, a.ClinicName, if(a.IsMissed > 0, \"Yes\", null) as IsMissed, e.DentalStaffID, d.Name as StaffName, e.TreatmentName
                         FROM zuc353_4.zuc_Appointments a
                         LEFT JOIN zuc_Patients p on a.PatientID = p.ID
                         LEFT JOIN zuc_Executes e on e.Date = a.Date and e.Time = a.Time and e.ClinicName = a.ClinicName and e.PatientID = a.PatientID
@@ -375,9 +375,6 @@ function isAdmin() {
     var person = prompt("Please enter your password");
     if (person == "password") {
         window.location.href = "admin.php";
-    } else {
-        alert("Incorrect password. Redirect to Home Page");
-        window.location.href = "Main.php";
     }
 }
 </script>

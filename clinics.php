@@ -52,8 +52,8 @@
         </div>
 
         <form id="foo" method="POST">
-            <label>Select a starting week: </label>
-            <input type="date" name="weekstart"/>
+            <label>Select a date: </label>
+            <input type="date" name="date"/>
             <br>
             <br>
             <label>Enter clinic name: </label>
@@ -78,13 +78,13 @@
                 
                 if (isset($_POST['query3'])) {
                     $clinicname = $_POST['clinicname'];
-                    $weekstart = $_POST['weekstart'];
+                    $date = $_POST['date'];
 
-                    $sql = "SELECT p.*, a.Date, a.Time, a.ClinicName, a.IsMissed
+                    $sql = "SELECT p.*, a.Date, a.Time, a.ClinicName, if(a.IsMissed > 0, \"Yes\", null) as IsMissed
                             FROM zuc_Appointments as a
                             LEFT JOIN zuc_Patients as p on PatientID = ID
                             WHERE ClinicName = '". $clinicname . "'
-                            AND Date = '" . $weekstart . "'";
+                            AND Date = '" . $date . "'";
 
                     $result = $conn->query($sql) or die($conn->error);
 
@@ -107,9 +107,6 @@ function isAdmin() {
     var person = prompt("Please enter your password");
     if (person == "password") {
         window.location.href = "admin.php";
-    } else {
-        alert("Incorrect password. Redirect to Home Page");
-        window.location.href = "Main.php";
     }
 }
 </script>
