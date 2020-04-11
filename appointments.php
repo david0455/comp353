@@ -80,7 +80,7 @@
                     Treatment : <input type="text" name="addtreatment" id="addtreatment" placeholder="Enter a Treatment">
                 </label>
                 </br>
-                
+                </br>
                 OPTIONAL
                 <label for="addstaff">
                     Staff ID : <input type="text" name="addstaff" id="addstaff" placeholder="Enter a Staff ID">
