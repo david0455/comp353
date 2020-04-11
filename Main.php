@@ -28,31 +28,31 @@
 </br>
             <div class="container">
                 <img class="image" style="float: left;width:300px;height:300px;" src="clinic.jpg" alt="clinic" id="logo">
-                <div class="overlay">
+                <div class="overlay" onclick="location.href='clinics.php';">
                     <div class="text"><a style="color:white;" href="clinics.php">Clinics</a></div>
                 </div>
             </div>
             <div class="container">
                 <img class="image" style="float: left;width:300px;height:300px;" src="appointment.jpg" alt="appointment" id="logo">
-                <div class="overlay">
+                <div class="overlay" onclick="location.href='appointments.php';">
                     <div class="text"><a style="color:white;" href="appointments.php">Appointments</a></div>
                 </div>
             </div>
             <div class="container">
                 <img class="image" style="float: left;width:300px;height:300px;" src="patients.jpg" alt="patient" id="logo">
-                <div class="overlay">
+                <div class="overlay" onclick="location.href='patients.php';">
                     <div class="text"><a style="color:white;" href="patients.php">Patients</a></div>
                 </div>
             </div>
             <div class="container">
                 <img class="image" style="float: left;width:300px;height:300px;" src="staff.jpeg" alt="staff" id="logo">
-                <div class="overlay">
+                <div class="overlay" onclick="location.href='staff.php';">
                     <div class="text"><a style="color:white;" href="staff.php">Staff</a></div>
                 </div>
             </div>
             <div class="container">
                 <img class="image" style="float: left;width:300px;height:300px;" src="bills.jpg" alt="billsgo" id="logo">
-                <div class="overlay">
+                <div class="overlay" onclick="location.href='bills.php';">
                     <div class="text"><a style="color:white;" href="bills.php">Bills</a></div>
                 </div>
             </div>
