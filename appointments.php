@@ -57,6 +57,63 @@
 
         <hr>
 
+
+        <div>
+            <h2>Fetch Treatments</h2>
+            <form method="post">
+                <label for="fetchdate">
+                    Date : <input type="date" name="fetchdate" id="fetchdate" placeholder="Enter a Date">
+                </label>
+                </br>
+                <label for="fetchtime">
+                    Time : <input type="time" name="fetchtime" id="fetchtime" placeholder="Enter a Time">
+                </label>
+                </br>
+                <label for="fetchclinic">
+                    Clinic Name : <input type="text" name="fetchclinic" id="fetchclinic" placeholder="Enter a Clinic Name">
+                </label>
+                </br>
+                <label for="patientname">
+                    Patient Name : <input type="text" name="patientname" id="patientname" placeholder="Enter a Name">
+                </label>
+                </br>
+                <input type="submit" name="fetchtreatment" value="Submit">
+                </br> 
+
+                <?php
+                if(isset($_POST['fetchtreatment'])) {
+                    $date = $_POST['fetchdate'];
+                    $time = $_POST['fetchtime'];
+                    $clinicname = $_POST['fetchclinic'];
+                    $patientname = $_POST['patientname'];
+                    
+                $sql = "SELECT e.TreatmentName as Name, t.Price as Price FROM zuc_Executes e
+                LEFT JOIN zuc_Treatments t ON e.TreatmentName = t.Name
+                WHERE e.Date = '" . $date . "' AND e.Time = '" . $time . "' AND e.ClinicName = '" . $clinicname . "'
+                AND e.PatientID = (
+                                    SELECT ID
+                                    FROM zuc_Patients
+                                    WHERE Name = '" . $patientname . "'
+                                  );";
+
+                $result = $conn->query($sql) or die($conn->error);
+
+                echo "<table><tr><th>Treatment</th><th>Price</th></tr>";
+                while($row = $result->fetch_assoc()) {
+                    echo "<tr><td>" . $row["Name"]. "</td><td>" . $row["Price"]. "</td></tr>";
+                }
+                echo "</table><br>";
+
+                }
+            ?>
+                         
+        </div>
+        
+        <br>
+
+        <hr>
+
+
         <div style="float : left; padding : 20px;">
             <h2>Add an Appointment</h2>
             <form method="post">
@@ -185,7 +242,8 @@
         </div>
 
         <div style="float : left; padding : 20px;">
-            <h2>Update an OLD Appointment</h2>
+            <h2>Update An Appointment</h2>
+            <h3>Old Values</h3>
             <form method="post">
                 <label for="olddate">
                     Old Date : <input type="date" name="olddate" placeholder="Enter a Date">
@@ -204,7 +262,7 @@
                 </label>
             
             <br>
-            <h2>Update a NEW Appointment</h2>
+            <h3>New Values</h3>
 
                 <label for="date">
                     New Date : <input type="date" name="newdate" placeholder="Enter a Date">
