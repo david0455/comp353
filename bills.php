@@ -60,8 +60,30 @@
                 echo "<tr><td>" . $row["TransactionNumber"]. "</td><td>" . $row["Amount"]. "</td><td>" . $row["ID"]. "</td><td>" . $row["Name"]. "</td><td>" . $row["Date"]. "</td><td>" . $row["Time"]. "</td><td>" . $row["ClinicName"]. "</td></tr>";
             }
             echo "</table><br>";
-            $conn->close();
             ?>
+
+            <div style="float : left; padding : 20px;">
+            <h2>Update A Bill</h2>
+            <form method="post">
+                <label for="transaction">
+                    Transaction Number : <input type="number" name="transaction" id="transaction" placeholder="Enter a Transaction">
+                </label>
+                </br>
+                <input type="submit" name="updatebill" value="Submit">
+            </form>
+            </div>
+
+            <?php
+                if(isset($_POST['updatebill'])) {
+                    $transaction = $_POST['transaction'];
+            
+                    $sql = "UPDATE zuc_Bills
+                            SET IsPaid = 1 WHERE TransactionNumber = '" . $transaction . "';";
+                    $conn->query($sql) or die($conn->error);
+                 }
+                 $conn->close();
+            ?>
+            
         </div>
     </div>
 </body>
