@@ -140,7 +140,7 @@
                 </label>
                 </br>
                 <label for="addtreatment">
-                    Treatments : </br><textarea name="addtreatment" id="addtreatment" rows="5" cols="50"></textarea>
+                    Treatments : </br><textarea name="addtreatment" id="addtreatment" rows="3" cols="50"></textarea>
                 </label>
                 </br>
                 <label for="addstaff">
