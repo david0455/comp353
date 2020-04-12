@@ -429,29 +429,23 @@
         <hr style="clear: left;">
         <div>
             <h2>Dentist Schedule</h2>
-            <form id="foo" method="POST">
-                <label>Select a start date and ending date: </label>
-                <table>
-                    <tr>
-                        <th>Start Date</th>
-                        <th>Ending Date</th>
-                    </tr>
-                    <tr>
-                        <th><input type="date" name="daystart" id="daystart"/></th>
-                        <th><input type="date" name="dayend" id="dayend"/></th>
-                    </tr>
-                </table>
+            <form method="POST">
+                <label for="daystart">
+                    Start Date : <input type="date" name="daystart" id="daystart">
+                </label>
+                </br>
+                <label for="daystend">
+                    End Date: <input type="date" name="dayend" id="dayend">
+                </label>
                 <br>
-                <br>
-                <label>Enter a dentist name to check his schedule: </label>
-                <input id="dentistname" name="dentistname" id="dentistname" type="text"/>
+                <label for="dentistID">
+                    Dentist ID : <input type="number" name="dentistID" id="dentistID"/>
+                </label>
                 <br>
                 <input type="submit" value="Submit" name="query2"/>
             </form>
-
             <br>
             <br>
-
             <div>
                 <?php
                     $servername = "zuc353.encs.concordia.ca";
@@ -467,21 +461,14 @@
                     }
 
                     if (isset($_POST['query2'])) {
-                        $dentistname = $_POST['dentistname'];
-
-                        if (isset($_POST['daystart']) && isset($_POST['dayend'])) {
-                            $daystart = $_POST['daystart'];
-                            $dayend = $_POST['daysend'];
-                        }
+                        $dentistID = $_POST['dentistID'];
+                        $daystart = $_POST['daytart'];
+                        $dayend = $_POST['dayend'];
         
                         $sql = "SELECT Name, ID, Date, Time, ClinicName
                                 FROM zuc_AssignedTo
                                 LEFT JOIN  zuc_Patients ON PatientID = ID
-                                WHERE DentistID = (
-                                                    SELECT ID
-                                                    FROM zuc_Dentists 
-                                                    WHERE Name = '" . $dentistname . "'
-                                                )
+                                WHERE DentistID = '" . $dentistID . "'
                                 AND Date BETWEEN '" . $daystart . "' AND '" . $dayend . "'";
         
                         $result = $conn->query($sql) or die($conn->error);
