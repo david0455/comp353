@@ -15,7 +15,7 @@
             <li><a href="clinics.php">Clinics</a></li>
             <li><a href="appointments.php">Appointments</a></li>
             <li><a href="patients.php">Patients</a></li>
-            <li><a href="staff.php">Staff</a></li>
+            <li><a href="staff.php">Dental Staff</a></li>
             <li><a class="active"ref="#bills">Bills</a></li>
         </ul>
         <div id="admincontainer">

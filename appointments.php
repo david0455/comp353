@@ -14,7 +14,7 @@
             <li><a href="clinics.php">Clinics</a></li>
             <li><a class="active" href="#appointments">Appointments</a></li>
             <li><a href="patients.php">Patients</a></li>
-            <li><a href="staff.php">Staff</a></li>
+            <li><a href="staff.php">Dental Staff</a></li>
             <li><a href="bills.php">Bills</a></li>
         </ul>
         <div id="admincontainer">
@@ -50,13 +50,13 @@
                     echo "<tr><td>" . $row["PatientID"]. "</td><td>" . $row["PatientName"]. "</td><td>" . $row["Date"]. "</td><td>" . $row["Time"]. "</td><td>" . $row["ClinicName"]. "</td><td>" . $row["IsMissed"]. "</td><td>" . $row["DentalStaffID"]. "</td><td>" . $row["StaffName"]. "</td><td>" . $row["TreatmentName"]. "</td></tr>";
                 }
                 echo "</table><br>";
+                
+                $conn->close();
             ?>
         </div>
         
         <br>
-
         <hr>
-
 
         <div>
             <h2>Fetch Treatments</h2>
@@ -73,28 +73,36 @@
                     Clinic Name : <input type="text" name="fetchclinic" id="fetchclinic" placeholder="Enter a Clinic Name">
                 </label>
                 </br>
-                <label for="patientname">
-                    Patient Name : <input type="text" name="patientname" id="patientname" placeholder="Enter a Name">
+                <label for="fetchpatientid">
+                    Patient ID : <input type="number" name="fetchpatientid" id="fetchpatientid" placeholder="Enter a Name">
                 </label>
                 </br>
                 <input type="submit" name="fetchtreatment" value="Submit">
                 </br> 
 
-                <?php
+            <?php
+                $servername = "zuc353.encs.concordia.ca";
+                $username = "zuc353_4";
+                $password = "potatoal";
+                $dbname = "zuc353_4";
+
+                // Create connection
+                $conn = new mysqli($servername, $username, $password, $dbname);
+                // Check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+
                 if(isset($_POST['fetchtreatment'])) {
-                    $date = $_POST['fetchdate'];
-                    $time = $_POST['fetchtime'];
-                    $clinicname = $_POST['fetchclinic'];
-                    $patientname = $_POST['patientname'];
+                    $fetchdate = $_POST['fetchdate'];
+                    $fetchtime = $_POST['fetchtime'];
+                    $fetchclinicname = $_POST['fetchclinic'];
+                    $fetchpatientid = $_POST['fetchpatientid'];
                     
                 $sql = "SELECT e.TreatmentName as Name, t.Price as Price FROM zuc_Executes e
                 LEFT JOIN zuc_Treatments t ON e.TreatmentName = t.Name
-                WHERE e.Date = '" . $date . "' AND e.Time = '" . $time . "' AND e.ClinicName = '" . $clinicname . "'
-                AND e.PatientID = (
-                                    SELECT ID
-                                    FROM zuc_Patients
-                                    WHERE Name = '" . $patientname . "'
-                                  );";
+                WHERE e.Date = '" . $fetchdate . "' AND e.Time = '" . $fetchtime . "' AND e.ClinicName = '" . $fetchclinicname . "'
+                AND e.PatientID = '" . $fetchpatientid . "';";
 
                 $result = $conn->query($sql) or die($conn->error);
 
@@ -105,14 +113,12 @@
                 echo "</table><br>";
 
                 }
-            ?>
-                         
+                $conn->close();
+            ?>    
         </div>
         
         <br>
-
         <hr>
-
 
         <div style="float : left; padding : 20px;">
             <h2>Add an Appointment</h2>
@@ -134,41 +140,59 @@
                 </label>
                 </br>
                 <label for="addtreatment">
-                    Treatment : <input type="text" name="addtreatment" id="addtreatment" placeholder="Enter a Treatment">
+                    Treatments : </br><textarea name="addtreatment" id="addtreatment" rows="5" cols="50"></textarea>
+                </label>
+                </br>
+                <label for="addstaff">
+                    Dental Staff ID : <input type="text" name="addstaff" id="addstaff" placeholder="Enter a Staff ID">
                 </label>
                 </br>
                 </br>
-                OPTIONAL
-                <label for="addstaff">
-                    Staff ID : <input type="text" name="addstaff" id="addstaff" placeholder="Enter a Staff ID">
+                <label for="adddentist">
+                    OPTIONAL Dentist ID : <input type="text" name="adddentist" id="adddentist" placeholder="Enter a Dentist ID">
                 </label>
                 </br>
                 <input type="submit" name="addApp" value="Submit">
             </form>
 
             <?php
+                $servername = "zuc353.encs.concordia.ca";
+                $username = "zuc353_4";
+                $password = "potatoal";
+                $dbname = "zuc353_4";
+
+                // Create connection
+                $conn = new mysqli($servername, $username, $password, $dbname);
+                // Check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+
                 if(isset($_POST['addApp'])) {
-                    $date = $_POST['adddate'];
-                    $time = $_POST['addtime'];
-                    $clinicname = $_POST['addclinicname'];
-                    $patientid = $_POST['addpatientid'];
-                    $treatmentName = $_POST['addtreatment'];
-                    $staff = $_POST['addstaff'];
-                
+                    $adddate = $_POST['adddate'];
+                    $addtime = $_POST['addtime'];
+                    $addclinicname = $_POST['addclinicname'];
+                    $addpatientid = $_POST['addpatientid'];
+                    $addstaff = $_POST['addstaff'];
+                    $adddentistid = $_POST['adddentist'];
+                    $listOfTreatments = explode (",", $_POST['addtreatment']);
+                    
 
                     $sql = "INSERT INTO zuc_Appointments(Date, Time, ClinicName, PatientID, IsMissed)
-                            Values('" . $date . "', '" . $time . "', '" . $clinicname . "', '" . $patientid . "', '0');";
+                            Values('" . $adddate . "', '" . $addtime . "', '" . $addclinicname . "', '" . $addpatientid . "', '0');";
                     
                     $conn->query($sql) or die($conn->error);
-                    
-                    if ($staff != null) {
-                        $sql = "INSERT INTO zuc_Executes(TreatmentName, DentalStaffID, Date, Time, ClinicName, PatientID)
-                                Values('" . $treatmentName . "', '" . $staff . "','" . $date . "', '" . $time . "', '" . $clinicname . "', '" . $patientid . "');";
 
+                    for ($i = 0; $i < sizeof($listOfTreatments); $i++) {
+                        $sql = "INSERT INTO zuc_Executes(TreatmentName, DentalStaffID, Date, Time, ClinicName, PatientID)
+                                    Values('" . $listOfTreatments[$i] . "', '" . $addstaff . "','" . $adddate . "', '" . $addtime . "', '" . $addclinicname . "', '" . $addpatientid . "');";
+                                
                         $conn->query($sql) or die($conn->error);
-                    } else {
-                        $sql = "INSERT INTO zuc_Executes(TreatmentName, Date, Time, ClinicName, PatientID)
-                                Values('" . $treatmentName . "', '" . $date . "', '" . $time . "', '" . $clinicname . "', '" . $patientid . "');";
+                    }
+                    
+                    if ($adddentistid != null) {
+                        $sql = "INSERT INTO zuc_AssignedTo(Date, Time, ClinicName, PatientID, DentistID)
+                                Values('" . $adddate . "', '" . $addtime . "','" . $addclinicname . "', '" . $addpatientid . "', '" . $adddentistid . "');";
 
                         $conn->query($sql) or die($conn->error);
                     }
@@ -183,61 +207,91 @@
                                 (select sum(price) as Amount 
                                     from zuc_Treatments 
                                     where name in (select treatmentName from zuc_Executes where
-                                    date = '" . $date . "' and time = '" . $time . "' and clinicName = '" . $clinicname . "' and patientID = '" . $patientid . "')
+                                    date = '" . $adddate . "' and time = '" . $addtime . "' and clinicName = '" . $addclinicname . "' and patientID = '" . $addpatientid . "')
                                     ) as Amount, 0 as IsPaid
                                 from zuc_Appointments
-                                where date = '" . $date . "' and time = '" . $time . "' and clinicName = '" . $clinicname . "' and patientID = '" . $patientid . "';";
+                                where date = '" . $adddate . "' and time = '" . $addtime . "' and clinicName = '" . $addclinicname . "' and patientID = '" . $addpatientid . "';";
                                 
                     $conn->query($sql) or die($conn->error);
 
-                    $sql = "INSERT INTO zuc_Billing(Date, Time, ClinicName, PatientID, TransactionNumber, TreatmentName)
-                    Values('" . $date . "', '" . $time . "', '" . $clinicname . "', '" . $patientid . "', (select max(transactionNumber) from zuc_Bills), '" . $treatmentName . "');";
-                    
-                    $conn->query($sql) or die($conn->error);
-
-                 }
+                    for ($i = 0; $i < sizeof($listOfTreatments); $i++) {
+                        $sql = "INSERT INTO zuc_Billing(Date, Time, ClinicName, PatientID, TransactionNumber, TreatmentName)
+                        Values('" . $adddate . "', '" . $addtime . "', '" . $addclinicname . "', '" . $addpatientid . "', (select max(transactionNumber) from zuc_Bills), '" . $listOfTreatments[$i] . "');";
+                        
+                        $conn->query($sql) or die($conn->error);
+                    }
+                }
+                $conn->close();
             ?>
         </div>
 
         <div style="float : left; padding : 20px;">
             <h2>Delete an Appointment</h2>
             <form method="post">
-                <label for="date">
-                    Date : <input type="date" name="date" placeholder="Enter a Date">
+                <label for="deldate">
+                    Date : <input type="date" name="deldate" id="deldate" placeholder="Enter a Date">
                 </label>
                 </br>
-                <label for="time">
-                    Time : <input type="time" name="time" placeholder="Enter a Time">
+                <label for="deltime">
+                    Time : <input type="time" name="deltime" id="deltime" placeholder="Enter a Time">
                 </label>
                 </br>
-                <label for="clinicname">
-                    Clinic Name : <input type="text" name="clinicname" placeholder="Enter a Clinic Name">
+                <label for="delclinicname">
+                    Clinic Name : <input type="text" name="delclinicname" id="delclinicname" placeholder="Enter a Clinic Name">
                 </label>
                 </br>
-                <label for="patientid">
-                    Patient ID : <input type="number" name="patientid" id="address" placeholder="Enter a Patient ID">
+                <label for="delpatientid">
+                    Patient ID : <input type="number" name="delpatientid" id="delpatientid" placeholder="Enter a Patient ID">
                 </label>
                 </br>
                 <input type="submit" name="deleteApp" value="Submit">
             </form>
 
             <?php
+                $servername = "zuc353.encs.concordia.ca";
+                $username = "zuc353_4";
+                $password = "potatoal";
+                $dbname = "zuc353_4";
+
+                // Create connection
+                $conn = new mysqli($servername, $username, $password, $dbname);
+                // Check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+
                 if(isset($_POST['deleteApp'])) {
-                    $date = $_POST['date'];
-                    $time = $_POST['time'];
-                    $clinicname = $_POST['clinicname'];
-                    $patientid = $_POST['patientid'];
-                
+                    $deldate = $_POST['deldate'];
+                    $deltime = $_POST['deltime'];
+                    $delclinicname = $_POST['delclinicname'];
+                    $delpatientid = $_POST['delpatientid'];
 
-                    $sql = "DELETE FROM zuc_Appointments
-                            WHERE Date='" . $date . "' AND Time='" . $time . "' AND ClinicName='" . $clinicname . "' AND PatientID='" . $patientid . "'";
-
-                    if ($conn->query($sql) === FALSE) {
-                        echo "Error: " . $sql . "<br>" . $conn->error;
-                    }
+                    $sql = "DELETE FROM zuc_AssignedTo
+                    WHERE Date='" . $deldate . "' AND Time='" . $deltime . "' AND ClinicName='" . $delclinicname . "' AND PatientID='" . $delpatientid . "'";
 
                     $conn->query($sql) or die($conn->error);
-                 }
+             
+                    $sql = "DELETE FROM zuc_Billing
+                    WHERE Date='" . $deldate . "' AND Time='" . $deltime . "' AND ClinicName='" . $delclinicname . "' AND PatientID='" . $delpatientid . "'";
+
+                    $conn->query($sql) or die($conn->error);
+
+                    $sql = "DELETE FROM zuc_Executes
+                            WHERE Date='" . $deldate . "' AND Time='" . $deltime . "' AND ClinicName='" . $delclinicname . "' AND PatientID='" . $delpatientid . "'";
+
+                    $conn->query($sql) or die($conn->error);
+                    
+                    $sql = "DELETE FROM zuc_Bills
+                    WHERE Date='" . $deldate . "' AND Time='" . $deltime . "' AND ClinicName='" . $delclinicname . "' AND PatientID='" . $delpatientid . "'";
+
+                    $conn->query($sql) or die($conn->error);
+
+                    $sql = "DELETE FROM zuc_Appointments
+                            WHERE Date='" . $deldate . "' AND Time='" . $deltime . "' AND ClinicName='" . $delclinicname . "' AND PatientID='" . $delpatientid . "'";
+
+                    $conn->query($sql) or die($conn->error);
+                }
+                $conn->close();
             ?>
         </div>
 
@@ -246,44 +300,56 @@
             <h3>Old Values</h3>
             <form method="post">
                 <label for="olddate">
-                    Old Date : <input type="date" name="olddate" placeholder="Enter a Date">
+                    Old Date : <input type="date" name="olddate" id="olddate" placeholder="Enter a Date">
                 </label>
                 </br>
-                <label for="time">
-                    Old Time : <input type="time" name="oldtime" placeholder="Enter a Time">
+                <label for="oldtime">
+                    Old Time : <input type="time" name="oldtime" id="oldtime" placeholder="Enter a Time">
                 </label>
                 </br>
-                <label for="clinicname">
-                    Old Clinic Name : <input type="text" name="oldclinicname" placeholder="Enter a Clinic Name">
+                <label for="oldclinicname">
+                    Old Clinic Name : <input type="text" name="oldclinicname" id="oldclinicname" placeholder="Enter a Clinic Name">
                 </label>
                 </br>
-                <label for="patientid">
-                    Old Patient ID : <input type="number" name="oldpatientid" id="address" placeholder="Enter a Patient ID">
+                <label for="oldpatientid">
+                    Old Patient ID : <input type="number" name="oldpatientid" id="oldpatientid" placeholder="Enter a Patient ID">
                 </label>
             
             <br>
             <h3>New Values</h3>
 
-                <label for="date">
-                    New Date : <input type="date" name="newdate" placeholder="Enter a Date">
+                <label for="newdate">
+                    New Date : <input type="date" name="newdate" id="newdate" placeholder="Enter a Date">
                 </label>
                 </br>
-                <label for="time">
-                    New Time : <input type="time" name="newtime" placeholder="Enter a Time">
+                <label for="newtime">
+                    New Time : <input type="time" name="newtime" id="newtime" placeholder="Enter a Time">
                 </label>
                 </br>
-                <label for="clinicname">
-                    New Clinic Name : <input type="text" name="newclinicname" placeholder="Enter a Clinic Name">
+                <label for="newclinicname">
+                    New Clinic Name : <input type="text" name="newclinicname" id="newclinicname" placeholder="Enter a Clinic Name">
                 </label>
                 </br>
-                <label for="patientid">
-                    New Patient ID : <input type="number" name="newpatientid" id="address" placeholder="Enter a Patient ID">
+                <label for="newpatientid">
+                    New Patient ID : <input type="number" name="newpatientid" id="newpatientid" placeholder="Enter a Patient ID">
                 </label>
                 </br>
                 <input type="submit" name="updateApp" value="Submit">                 
             </form>
 
             <?php
+                $servername = "zuc353.encs.concordia.ca";
+                $username = "zuc353_4";
+                $password = "potatoal";
+                $dbname = "zuc353_4";
+
+                // Create connection
+                $conn = new mysqli($servername, $username, $password, $dbname);
+                // Check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+
                 if(isset($_POST['updateApp'])) {
                     $olddate = $_POST['olddate'];
                     $oldtime = $_POST['oldtime'];
@@ -298,13 +364,65 @@
                     $sql = "UPDATE zuc_Appointments
                             SET Date='" . $newtime . "' AND Time='" . $newtime . "' AND ClinicName='" . $newclinicname . "' AND PatientID='" . $newpatientid . "'
                             WHERE Date='" . $olddate . "' AND Time='" . $oldtime . "' AND ClinicName='" . $oldclinicname . "' AND PatientID='" . $oldpatientid ."'";
-                    
-                    if ($conn->query($sql) === FALSE) {
-                        echo "Error: " . $sql . "<br>" . $conn->error;
-                    }
+
+                    $conn->query($sql) or die($conn->error);
+                }
+                $conn->close();
+            ?>
+        </div>
+
+        <div style="float : left; padding : 20px;">
+        <h2>Schedule Dentist For Appointment</h2>
+            <form method="post">
+                <label for="dentdate">
+                    Date : <input type="date" name="dentdate" id="dentdate" placeholder="Enter a Date">
+                </label>
+                </br>
+                <label for="denttime">
+                    Time : <input type="time" name="denttime" id="denttime" placeholder="Enter a Time">
+                </label>
+                </br>
+                <label for="dentclinicname">
+                    Clinic Name : <input type="text" name="dentclinicname" id="dentclinicname" placeholder="Enter a Clinic Name">
+                </label>
+                </br>
+                <label for="dentpatientid">
+                    Patient ID : <input type="number" name="dentpatientid" id="dentpatientid" placeholder="Enter a Patient ID">
+                </label>
+                </br>
+                <label for="dentdentistid">
+                    Dentist ID : <input type="number" name="dentdentistid" id="dentdentistid" placeholder="Enter a Patient ID">
+                </label>
+                </br>
+                <input type="submit" name="addappdentist" value="Submit">
+            </form>
+
+            <?php
+                $servername = "zuc353.encs.concordia.ca";
+                $username = "zuc353_4";
+                $password = "potatoal";
+                $dbname = "zuc353_4";
+
+                // Create connection
+                $conn = new mysqli($servername, $username, $password, $dbname);
+                // Check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+
+                if(isset($_POST['addappdentist'])) {
+                    $dentdate = $_POST['dentdate'];
+                    $denttime = $_POST['denttime'];
+                    $dentclinicname = $_POST['dentclinicname'];
+                    $dentpatientid = $_POST['dentpatientid'];
+                    $dentdentistid = $_POST['dentdentistid'];
+                
+                    $sql = "INSERT INTO zuc_AssignedTo(Date, Time, ClinicName, PatientID, DentistID)
+                                Values('" . $dentdate . "', '" . $denttime . "','" . $dentclinicname . "', '" . $dentpatientid . "', '" . $dentdentistid . "');";
 
                     $conn->query($sql) or die($conn->error);
                  }
+                 $conn->close();
             ?>
         </div>
  
@@ -312,21 +430,21 @@
         <div>
             <h2>Dentist Schedule</h2>
             <form id="foo" method="POST">
-                <label>Select a starting week and ending week: </label>
+                <label>Select a start date and ending date: </label>
                 <table>
                     <tr>
-                        <th>Starting Week</th>
-                        <th>Ending Week</th>
+                        <th>Start Date</th>
+                        <th>Ending Date</th>
                     </tr>
                     <tr>
-                        <th><input type="date" name="weekstart"/></th>
-                        <th><input type="date" name="weekend"/></th>
+                        <th><input type="date" name="daystart" id="daystart"/></th>
+                        <th><input type="date" name="dayend" id="dayend"/></th>
                     </tr>
                 </table>
                 <br>
                 <br>
                 <label>Enter a dentist name to check his schedule: </label>
-                <input id="dentistname" name="dentistname" type="text"/>
+                <input id="dentistname" name="dentistname" id="dentistname" type="text"/>
                 <br>
                 <input type="submit" value="Submit" name="query2"/>
             </form>
@@ -336,12 +454,24 @@
 
             <div>
                 <?php
+                    $servername = "zuc353.encs.concordia.ca";
+                    $username = "zuc353_4";
+                    $password = "potatoal";
+                    $dbname = "zuc353_4";
+
+                    // Create connection
+                    $conn = new mysqli($servername, $username, $password, $dbname);
+                    // Check connection
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
+
                     if (isset($_POST['query2'])) {
                         $dentistname = $_POST['dentistname'];
 
-                        if (isset($_POST['weekstart']) && isset($_POST['weekend'])) {
-                            $weekstart = $_POST['weekstart'];
-                            $weekend = $_POST['weekend'];
+                        if (isset($_POST['daystart']) && isset($_POST['dayend'])) {
+                            $daystart = $_POST['daystart'];
+                            $dayend = $_POST['daysend'];
                         }
         
                         $sql = "SELECT Name, ID, Date, Time, ClinicName
@@ -352,7 +482,7 @@
                                                     FROM zuc_Dentists 
                                                     WHERE Name = '" . $dentistname . "'
                                                 )
-                                AND Date BETWEEN '" . $weekstart . "' AND '" . $weekend . "'";
+                                AND Date BETWEEN '" . $daystart . "' AND '" . $dayend . "'";
         
                         $result = $conn->query($sql) or die($conn->error);
         

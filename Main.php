@@ -33,7 +33,7 @@
             <div class="container">
                 <img class="image" style="float: left;width:300px;height:300px;" src="staff.jpeg" alt="staff" id="logo">
                 <div class="overlay" onclick="location.href='staff.php';">
-                    <div class="text">Staff</div>
+                    <div class="text">Dental Staff</div>
                 </div>
             </div>
             <div class="container">

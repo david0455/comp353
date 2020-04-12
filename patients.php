@@ -14,7 +14,7 @@
             <li><a href="clinics.php">Clinics</a></li>
             <li><a href="appointments.php">Appointments</a></li>
             <li><a class="active" href="#patients">Patients</a></li>
-            <li><a href="staff.php">Staff</a></li>
+            <li><a href="staff.php">SDental Staff</a></li>
             <li><a href="bills.php">Bills</a></li>
         </ul>
         <div id="admincontainer">
@@ -48,6 +48,7 @@
                     echo "<tr><td>" . $row["ID"]. "</td><td>" . $row["Name"]. "</td><td>" . $row["Age"]. "</td><td>" . $row["Sex"]. "</td><td>" . $row["Address"]. "</td><td>" . $row["MedicareNumber"]. "</td><td>" . $row["Missed Appointments"]. "</td></tr>";
                 }
                 echo "</table><br>";
+                $conn->close();
             ?>
 
             <div style="float : left; padding : 20px;">
@@ -77,6 +78,17 @@
                 </form>
 
                 <?php
+                    $servername = "zuc353.encs.concordia.ca";
+                    $username = "zuc353_4";
+                    $password = "potatoal";
+                    $dbname = "zuc353_4";
+
+                    // Create connection
+                    $conn = new mysqli($servername, $username, $password, $dbname);
+                    // Check connection
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
                     if(isset($_POST['submitInsert'])) {
                         $name = $_POST['name'];
                         $age = $_POST['age'];
@@ -90,10 +102,9 @@
                         $sql = "INSERT INTO zuc_Patients(Name, Age, Sex, Address, MedicareNumber)
                         Values('" . $name . "', '" . $age . "', '" . $sex . "', '" . $address . "', '" . $medicare . "');";
 
-                        if ($conn->query($sql) === FALSE) {
-                            echo "Error: " . $sql . "<br>" . $conn->error;
-                        }
+                        $conn->query($sql) or die($conn->error);
                      }
+                     $conn->close();
                 ?>
                 </br>
             </div>
@@ -108,6 +119,18 @@
                 </form>
 
                 <?php
+                    $servername = "zuc353.encs.concordia.ca";
+                    $username = "zuc353_4";
+                    $password = "potatoal";
+                    $dbname = "zuc353_4";
+
+                    // Create connection
+                    $conn = new mysqli($servername, $username, $password, $dbname);
+                    // Check connection
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
+
                     if(isset($_POST['deletePatient'])) {
                         $id = $_POST['id'];
 
@@ -115,64 +138,15 @@
 
                         $sql = "DELETE FROM zuc_Patients where ID = " . $id . ";";
                         
-                        if ($conn->query($sql) === FALSE) {
-                            echo "Error: " . $sql . "<br>" . $conn->error;
-                        }
+                        $conn->query($sql) or die($conn->error);
                      }
+                    $conn->close();
                 ?>
                 </br>
                 </br>
                 </br>
             </div>
-            <!-- <div style="float : left; padding : 20px">
-                <h2>Update a Patient</h2>
-                <form method="post">
-                    <label for="name">
-                        Patient Name : <input type="text" name="name" id="name" placeholder="Enter a Name">
-                    </label>
-                    </br>
-                    <label for="age">
-                        Patient Age : <input type="number" name="age" id="age" placeholder="Enter an Age">
-                    </label>
-                    </br>
-                    <label for="sex">
-                        Patient Sex : <input type="text" name="sex" id="sex" placeholder="Enter a Sex">
-                    </label>
-                    </br>
-                    <label for="Name">
-                        Patient Address : <input type="text" name="address" id="address" placeholder="Enter an Address">
-                    </label>
-                    </br>
-                    <label for="Name">
-                        Patient Medicare : <input type="number" name="medicare" id="medicare" placeholder="Enter a Medicare">
-                    </label>
-                    </br>
-                    <input type="submit" name="submitUpdate" value="Submit">
-                </form>
-
-                <?php
-                    // if(isset($_POST['submitUpdate'])) {
-                    //     unset($_POST['submitUpdate']);
-
-                    //     $name = $_POST['name'];
-                    //     $age = $_POST['age'];
-                    //     $sex = $_POST['sex'];
-                    //     $address = $_POST['age'];
-                    //     $medicare = $_POST['medicare'];
-                    
-
-                    //     $sql = "INSERT INTO zuc_Patients(Name, Age, Sex, Address, MedicareNumber)
-                    //     Values('" . $name . "', '" . $age . "', '" . $sex . "', '" . $address . "', '" . $medicare . "');";
-
-                    //     if ($conn->query($sql) === FALSE) {
-                    //         echo "Error: " . $sql . "<br>" . $conn->error;
-                    //     }
-                    //  }
-                ?>
-                </br>
-                </br>
-                </br>
-            </div> -->
+            
         </div>
 
         </br>
@@ -191,6 +165,18 @@
             </br>
 
             <?php
+                $servername = "zuc353.encs.concordia.ca";
+                $username = "zuc353_4";
+                $password = "potatoal";
+                $dbname = "zuc353_4";
+
+                // Create connection
+                $conn = new mysqli($servername, $username, $password, $dbname);
+                // Check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+
                 if(isset($_POST['submit'])){
                     $medicare = $_POST['medicare'];
                     
@@ -209,6 +195,7 @@
                                                      );
                                 ";
                     $result = $conn->query($sql) or die($conn->error);
+
                     echo "<table><tr><th>Dentist</th><th>Date</th><th>Time</th><th>Clinic Name</th><th>Treatment</th><th>Missed App.</th></tr>";
                     while($row = $result->fetch_assoc()) {
                         echo "<tr><td>" . $row["Name"]. "</td><td>" . $row["Date"]. "</td><td>" . $row["Time"]. "</td><td>" . $row["ClinicName"]. "</td><td>" . $row["TreatmentName"]. "</td><td>" . $row["IsMissed"]. "</td></tr>";
