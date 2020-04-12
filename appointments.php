@@ -298,8 +298,11 @@
 
         <div style="float : left; padding : 20px;">
             <h2>Update An Appointment</h2>
-            <h3>Old Values</h3>
             <form method="post">
+                <label for="updatepatientid">
+                    Patient ID : <input type="number" name="updatepatientid" id="updatepatientid" placeholder="Enter a Patient ID">
+                </label>
+                <h3>Old Values</h3>
                 <label for="olddate">
                     Old Date : <input type="date" name="olddate" id="olddate" placeholder="Enter a Date">
                 </label>
@@ -311,13 +314,9 @@
                 <label for="oldclinicname">
                     Old Clinic Name : <input type="text" name="oldclinicname" id="oldclinicname" placeholder="Enter a Clinic Name">
                 </label>
-                </br>
-                <label for="oldpatientid">
-                    Old Patient ID : <input type="number" name="oldpatientid" id="oldpatientid" placeholder="Enter a Patient ID">
-                </label>
             
-            <br>
-            <h3>New Values</h3>
+                <br>
+                <h3>New Values</h3>
 
                 <label for="newdate">
                     New Date : <input type="date" name="newdate" id="newdate" placeholder="Enter a Date">
@@ -329,10 +328,6 @@
                 </br>
                 <label for="newclinicname">
                     New Clinic Name : <input type="text" name="newclinicname" id="newclinicname" placeholder="Enter a Clinic Name">
-                </label>
-                </br>
-                <label for="newpatientid">
-                    New Patient ID : <input type="number" name="newpatientid" id="newpatientid" placeholder="Enter a Patient ID">
                 </label>
                 </br>
                 <input type="submit" name="updateApp" value="Submit">                 
@@ -352,19 +347,20 @@
                 }
 
                 if(isset($_POST['updateApp'])) {
+                    $updatepatientid = $_POST['updatepatientid'];
+                    
                     $olddate = $_POST['olddate'];
                     $oldtime = $_POST['oldtime'];
                     $oldclinicname = $_POST['oldclinicname'];
-                    $oldpatientid = $_POST['oldpatientid'];
 
                     $newdate = $_POST['newdate'];
                     $newtime = $_POST['newtime'];
                     $newclinicname = $_POST['newclinicname'];
-                    $newpatientid = $_POST['newpatientid'];
 
+                    //turned on cascading
                     $sql = "UPDATE zuc_Appointments
-                            SET Date='" . $newtime . "' AND Time='" . $newtime . "' AND ClinicName='" . $newclinicname . "' AND PatientID='" . $newpatientid . "'
-                            WHERE Date='" . $olddate . "' AND Time='" . $oldtime . "' AND ClinicName='" . $oldclinicname . "' AND PatientID='" . $oldpatientid ."'";
+                    SET Date='" . $newdate . "', Time='" . $newtime . "', ClinicName='" . $newclinicname . "'
+                    WHERE Date='" . $olddate . "' AND Time='" . $oldtime . "' AND ClinicName='" . $oldclinicname . "' AND PatientID='" . $updatepatientid . "'";
 
                     $conn->query($sql) or die($conn->error);
                 }
@@ -463,7 +459,7 @@
 
                     if (isset($_POST['query2'])) {
                         $dentistID = $_POST['dentistID'];
-                        $daystart = $_POST['daytart'];
+                        $daystart = $_POST['daystart'];
                         $dayend = $_POST['dayend'];
         
                         $sql = "SELECT Name, ID, Date, Time, ClinicName
