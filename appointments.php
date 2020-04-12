@@ -147,8 +147,9 @@
                     Dental Staff ID : <input type="text" name="addstaff" id="addstaff" placeholder="Enter a Staff ID">
                 </label>
                 </br>
-                </br>
                 <label for="adddentist">
+                    ----------------------------------------------------
+                    </br>
                     OPTIONAL Dentist ID : <input type="text" name="adddentist" id="adddentist" placeholder="Enter a Dentist ID">
                 </label>
                 </br>
