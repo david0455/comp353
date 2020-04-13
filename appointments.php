@@ -119,6 +119,7 @@
         
         <br>
         <hr>
+        
 
         <div style="float : left; padding : 20px;">
             <h2>Add an Appointment</h2>
@@ -330,6 +331,10 @@
                     New Clinic Name : <input type="text" name="newclinicname" id="newclinicname" placeholder="Enter a Clinic Name">
                 </label>
                 </br>
+                <label for="newismissed">
+                    Is Missed : <input type="number" name="newismissed" id="newismissed" placeholder="Enter if missed">
+                </label>
+                </br>
                 <input type="submit" name="updateApp" value="Submit">                 
             </form>
 
@@ -356,10 +361,11 @@
                     $newdate = $_POST['newdate'];
                     $newtime = $_POST['newtime'];
                     $newclinicname = $_POST['newclinicname'];
+                    $newismissed = $_POST['newismissed'];
 
                     //turned on cascading
                     $sql = "UPDATE zuc_Appointments
-                    SET Date='" . $newdate . "', Time='" . $newtime . "', ClinicName='" . $newclinicname . "'
+                    SET Date='" . $newdate . "', Time='" . $newtime . "', ClinicName='" . $newclinicname . "', IsMissed='" . $newismissed . "'
                     WHERE Date='" . $olddate . "' AND Time='" . $oldtime . "' AND ClinicName='" . $oldclinicname . "' AND PatientID='" . $updatepatientid . "'";
 
                     $conn->query($sql) or die($conn->error);
