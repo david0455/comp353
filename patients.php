@@ -14,7 +14,7 @@
             <li><a href="clinics.php">Clinics</a></li>
             <li><a href="appointments.php">Appointments</a></li>
             <li><a class="active" href="#patients">Patients</a></li>
-            <li><a href="staff.php">SDental Staff</a></li>
+            <li><a href="staff.php">Dental Staff</a></li>
             <li><a href="bills.php">Bills</a></li>
         </ul>
         <div id="admincontainer">
@@ -156,8 +156,8 @@
         <div style="clear: left;">
             <h1>Patient Appointments</h1>
             <form method="post">
-                <label for="medicare">
-                    Patient Medicare Number : <input type="text" name="medicare" id="medicare">
+                <label for="patientID">
+                    Patient ID: <input type="text" name="patientID" id="patientID">
                 </label>
                 <input type="submit" name="submit" value="Search">
             </form>
@@ -178,27 +178,20 @@
                 }
 
                 if(isset($_POST['submit'])){
-                    $medicare = $_POST['medicare'];
+                    $patientID = $_POST['patientID'];
                     
-                    $sql = "SELECT d.Name, a.Date, a.Time, a.ClinicName, e.TreatmentName, if(app.IsMissed > 0, \"Yes\", null) as \"IsMissed\"
-                                FROM zuc_AssignedTo a
-                                LEFT JOIN zuc_Appointments app on app.Date = a.Date and app.Time = a.Time and app.ClinicName = a.ClinicName
-                                LEFT JOIN zuc_Dentists d ON ID = DentistID
-                                LEFT JOIN zuc_Executes e ON a.Date = e.Date 
-                                                AND e.Time = a.Time
-                                                AND e.ClinicName = a.ClinicName 
-                                                AND e.PatientID = a.PatientID
-                                WHERE a.PatientID = (
-                                                    SELECT ID
-                                                    FROM zuc_Patients
-                                                    WHERE MedicareNumber = " . $medicare . "
-                                                     );
-                                ";
+                    $sql = "SELECT a.DentistID, d.Name as Name, app.Date, app.Time, app.ClinicName, e.TreatmentName, if(app.IsMissed > 0, 'Yes', null) as IsMissed
+                            FROM zuc_Appointments app
+                            LEFT JOIN zuc_AssignedTo a on a.Date = app.Date AND app.Time = a.TIME and app.ClinicName = a.ClinicName and app.PatientID = a.PatientID
+                            LEFT JOIN zuc_Dentists d on d.ID = a.DentistID
+                            LEFT JOIN zuc_Executes e on e.Date = app.Date AND app.Time = e.TIME and app.ClinicName = e.ClinicName and app.PatientID = e.PatientID
+                            where app.patientID = '" . $patientID . "';";
+
                     $result = $conn->query($sql) or die($conn->error);
 
-                    echo "<table><tr><th>Dentist</th><th>Date</th><th>Time</th><th>Clinic Name</th><th>Treatment</th><th>Missed App.</th></tr>";
+                    echo "<table><tr><th>Dentist ID</th><th>Dentist</th><th>Date</th><th>Time</th><th>Clinic Name</th><th>Treatment</th><th>Missed App.</th></tr>";
                     while($row = $result->fetch_assoc()) {
-                        echo "<tr><td>" . $row["Name"]. "</td><td>" . $row["Date"]. "</td><td>" . $row["Time"]. "</td><td>" . $row["ClinicName"]. "</td><td>" . $row["TreatmentName"]. "</td><td>" . $row["IsMissed"]. "</td></tr>";
+                        echo "<tr><td>" . $row["DentistID"]. "</td><td>" . $row["Name"]. "</td><td>" . $row["Date"]. "</td><td>" . $row["Time"]. "</td><td>" . $row["ClinicName"]. "</td><td>" . $row["TreatmentName"]. "</td><td>" . $row["IsMissed"]. "</td></tr>";
                     }
                 }
                 $conn->close();
